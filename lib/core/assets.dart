@@ -5,8 +5,10 @@ class AppIcons {
   static const cart = "$_base/cart.svg";
   static const jordan = "$_base/jordan.svg";
   static const nike = "$_base/nike.svg";
+  static const reebok = "$_base/reebok.svg";
+  static const gucci = "$_base/gucci.svg";
   static const check = "$_base/check.svg";
-
+  static const empty = "$_base/empty.svg";
   static const search = "$_base/search.svg";
 }
 

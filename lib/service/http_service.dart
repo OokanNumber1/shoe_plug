@@ -16,7 +16,9 @@ class HttpService {
         "$baseUrl/products?organization_id=$orgId&reverse_sort=false&page=1&size=10&Appid=$appId&Apikey=$apiKey";
 
     try {
-      final response = await client.get(Uri.parse(uri));
+      final response = await client.get(Uri.parse(uri)).timeout(
+            const Duration(seconds: 10),
+          );
       final decodedResponse = jsonDecode(response.body) as Map<String, dynamic>;
       final items = decodedResponse['items'] as List<dynamic>;
 

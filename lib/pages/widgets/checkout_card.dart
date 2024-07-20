@@ -20,29 +20,44 @@ class CheckoutCard extends StatefulWidget {
 
 class _CheckoutCardState extends State<CheckoutCard> {
   int numberOfPairs = 1;
+
   @override
   Widget build(BuildContext context) {
+
     final product = widget.product;
-    return Container(margin: const EdgeInsets.symmetric(vertical: 12),
-      decoration: const BoxDecoration(color: AppColors.secondary),
+    
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 12,
+      ),
+      decoration: const BoxDecoration(
+        color: AppColors.secondary,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 12),
+              padding: const EdgeInsets.symmetric(
+                vertical: 32,
+                horizontal: 12,
+              ),
               decoration: BoxDecoration(
-                  color: AppColors.cardColor,
-                  borderRadius: BorderRadius.circular(8)),
-              child: Image.network(product.image,width: 80,),
+                color: AppColors.cardColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Image.network(
+                product.image,
+                width: 80,
+              ),
             ),
             xSpacing(12),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Row(
-                  mainAxisSize: MainAxisSize.min,
+                Row(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -51,8 +66,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
                           size: 15,
                           weight: FontWeight.w500,
                         ),
-                      ),//Spacer(),
-                      Align(alignment: Alignment.centerRight,
+                      ), //Spacer(),
+                      Align(
+                        alignment: Alignment.centerRight,
                         child: InkWell(
                           onTap: widget.onRemoved,
                           child: const Padding(
@@ -67,13 +83,16 @@ class _CheckoutCardState extends State<CheckoutCard> {
                     ]),
                 ySpacing(10),
                 Row(
-                  children: [  
+                  children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 4),
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
-                          color: AppColors.secondary,
-                          borderRadius: BorderRadius.circular(8)),
+                        color: AppColors.secondary,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -82,8 +101,9 @@ class _CheckoutCardState extends State<CheckoutCard> {
                               if (numberOfPairs > 1) {
                                 setState(() {
                                   numberOfPairs -= 1;
-                                  widget.onCountChanged(numberOfPairs);
-                                  // product.copyWith(numberOfPairs * product.amount);
+                                  widget.onCountChanged(
+                                    numberOfPairs,
+                                  );
                                 });
                               }
                             },
@@ -121,7 +141,6 @@ class _CheckoutCardState extends State<CheckoutCard> {
                     ),
                     xSpacing(12),
                     Text("₦ ${numberOfPairs * product.amount}")
-                    // Text("₦ ${product.amount}")
                   ],
                 )
               ],

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shoe_plug/models/product.dart';
 import 'package:shoe_plug/models/timbu_response.dart';
@@ -15,7 +14,7 @@ class CartNotifier extends ChangeNotifier {
   List<Product> productsFromTimbu = [];
 
   Set<Product> _productsInCart = {};
-  Map<int,int> numberInCart = {};
+  Map<int, int> numberInCart = {};
   List<Product> get productsInCart => _productsInCart.toList();
 
   Future<TimbuResponse> getProductsFromTimbu() async {
@@ -27,19 +26,18 @@ class CartNotifier extends ChangeNotifier {
       final response = await client.getProducts();
       timbuResponse.products = response;
       timbuResponse.isLoading = false;
-      notifyListeners();
+      // notifyListeners();
       timbuResponse.errorMessage = null;
       notifyListeners();
 
-      return timbuResponse; 
+      return timbuResponse;
     } catch (e) {
       timbuResponse.errorMessage = e.toString();
       timbuResponse.isLoading = false;
       timbuResponse.products = null;
       notifyListeners();
-    return timbuResponse;  
+      return timbuResponse;
     }
-    
   }
 
   void addToCart(Product product) {
@@ -59,23 +57,35 @@ class CartNotifier extends ChangeNotifier {
     _productsInCart = {};
     notifyListeners();
   }
-void setNumberInCart({required int index, required int value}){
-  numberInCart[index] = value;
-  notifyListeners();
-}
+
+  void setNumberInCart({
+    required int index,
+    required int value,
+  }) {
+    numberInCart[index] = value;
+    notifyListeners();
+  }
+
+  List<Product> categoriseProduct(String brandName) {
+    final products = timbuResponse.products ?? [];
+    if (products.isEmpty) {
+      return [];
+    }
+    return products
+        .where((product) => product.category == brandName.toLowerCase())
+        .toList();
+  }
+
   num getTotalAmountInCart() {
     if (_productsInCart.isEmpty) {
       return 0;
     }
     num total = 0;
-final productList = _productsInCart.toList();
-    // for (Product product in _productsInCart) {
-    for(int index=0;index<productList.length;index++){
-      final numberOfPairs = numberInCart[index]??1;
-    total += (productList[index].amount *  numberOfPairs);
-      
-    
-      // total += product.amount;
+    final productList = _productsInCart.toList();
+
+    for (int index = 0; index < productList.length; index++) {
+      final numberOfPairs = numberInCart[index] ?? 1;
+      total += (productList[index].amount * numberOfPairs);
     }
     return total;
   }
